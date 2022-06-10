@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%-include('_head.ejs') %>
+</head>
+<body>
+  <header>
+    <%-include('_header.ejs') %>
+  </header>
+  <main>
+    <section id="edit">
+      <h1 class="title"><%=title%></h1>
+      <form action="" method="post">
+        <table class="">
+          <tr>
+            <th>제목</th>
+            <td><input type="text" name="title" value="<%=postData.title%>" required></td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td><textarea name="content" rows="10" cols="80" required><%=postData.content%></textarea></td>
+          </tr>
+        </table>
+        <div class="buttons">
+          <button class="btn" type="button"
+            onclick="location.href='/notice/view/<%=page%>'">목록</button>
+          <button class="btn" type="submit"
+            onclick="return confirm('등록하시겠습니까?')">등록</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

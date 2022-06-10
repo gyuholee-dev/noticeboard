@@ -1,0 +1,122 @@
+html {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  background-color: $grey-95;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: $blue;
+  }
+}
+
+header {
+  height: 50px;
+  border-bottom: 1px solid $grey-85;
+  background-color: white;
+  .wrapper {
+    height: inherit;
+    @include flex(center, space-between);
+    max-width: $max-width;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: normal;
+  }
+}
+
+
+main {
+  padding: 15px 0;
+  section {
+    width: 100%;
+    max-width: $max-width;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    &#edit {
+      padding: 15px;
+      border-radius: 15px;
+      background-color: white;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-bottom: 15px;
+    }
+
+    span.emp {
+      background-color: yellow;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      margin-bottom: 10px;
+      background-color: white;
+      th, td {
+        // border: 1px solid $grey-85;
+        padding: 5px;
+      }
+      .btn {
+        font-weight: initial;
+        &:hover {
+          color: $blue;
+        }
+      }
+    }
+
+    .pagelinks {
+      @include flex(center, center);
+      margin-bottom: 15px;
+      .buttons {
+        width: initial;
+        >*:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+      .pages {
+        margin: 0 10px;
+        >a:not(:last-child) {
+          margin-right: 5px;
+        }
+      }
+    }
+    .buttons {
+      @include flex(center, space-around);
+      width: 100%;
+      .btn:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+
+  }
+
+  section#nopage {
+    @include flex(center, start, column);
+    img {
+      height: 320px;
+      width: auto;
+    }
+  }
+
+  #searchBox {
+    @include flex(center, center);
+    width: 100%;
+    >input[name=query] {
+      background-color: white;
+    }
+    :not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+}

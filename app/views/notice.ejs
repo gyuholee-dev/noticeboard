@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%-include('_head.ejs') %>
+</head>
+<body>
+  <header>
+    <%-include('_header.ejs') %>
+  </header>
+  <main>
+    <section id="list">
+      <% if (DO=='search') { %>
+      <h1 class="title">검색 결과: <span class="emp"><%=get.query%></span></h1>
+      <% } %>
+      <table class="table-border">
+        <tr>
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>조회</th>
+          <th>수정</th>
+          <th>삭제</th>
+        </tr>
+        <% for (let data of listData) { %>
+          <tr>
+            <td class="text-center"><%=data.no%></td>
+            <% 
+              let title = data.title;
+              if (DO=='search') {
+                title = title.replace(get.query, `<span class="emp">${get.query}</span>`);
+              } 
+            %>
+            <td><%-title%></td>
+            <td class="text-center"><%=data.writer%></td>
+            <td class="text-center"><%=data.writeday%></td>
+            <td class="text-center"><%=data.hit%></td>
+            <td class="text-center">
+              <button class="btn none min"
+                onclick="location.href='/notice/update/<%=data.no%>/<%=page%>'">수정</button>
+            </td>
+            <td class="text-center">
+              <form action="/notice/delete/<%=data.no%>/<%=page%>" method="post">
+                <input type="hidden" name="no" value="<%=data.no%>">
+                <button type="submit" class="btn none min"
+                  onclick="return confirm('삭제하시겠습니까?')">삭제</button>
+              </form>
+            </td>
+          </tr>
+        <% } %>
+      </table>
+      <div class="pagelinks">
+        <%- pageLinks %>
+      </div>
+      <form id="searchBox" action="/notice/search" method="get">
+        <% let q = ''; if (DO=='search') { q = get.query; }  %>
+        <input type="text" name="query" value="<%=q%>" placeholder="검색어를 입력하세요">
+        <button type="submit" class="btn inline">검색</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
