@@ -16,7 +16,7 @@ const config = {
   },
   db : {
     host : 'localhost',
-    user : 'webadmin',
+    user : 'root',
     password : null,
     port : '3306',
     socketPath: '/var/lib/mysql/mysql.sock',
