@@ -5,7 +5,7 @@ import fs from 'fs';
 // 컨피그
 let config = {
   hostname: 'localhost',
-  port: 8000,
+  port: 8080,
   // 디렉토리
   paths : {
     app : 'app',
