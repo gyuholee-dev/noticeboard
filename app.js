@@ -5,7 +5,7 @@ import fs from 'fs';
 // const config = JSON.parse(fs.readFileSync('./config/config.json', 'utf8'));
 const config = {
   hostname: 'localhost',
-  port: 5000,
+  port: 8000,
   // 디렉토리
   paths : {
     app : 'app',
