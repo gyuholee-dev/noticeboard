@@ -50,6 +50,7 @@ export default class Server {
 
     // 비동기 라우팅
     this.server.all('*', asyncHandler(async(request, response, next)=>{
+      // console.log(request.url);
       try {
         await this.router.route(request, response);
       } catch (error) {
