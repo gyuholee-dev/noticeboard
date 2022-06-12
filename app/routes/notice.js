@@ -1,10 +1,22 @@
-export default async function notice(method, request, response, params, get=null) {
+import * as url from 'url';
+// https://www.npmjs.com/package/path-to-regexp
+import { match } from 'path-to-regexp';
+export default async function notice(method, request, response, get=null) {
 
-  let ACT = 'notice';
-  // let ACT = params[1] ? params[1] : 'notice';
-  let DO = params[2] ? params[2] : 'view';
-  let ID = params[3] ? params[3] : 1;
-  let PAGE = params[4] ? params[4] : 1;
+  const _do = ['view','search','update','write','delete'].join('|');
+  const pathMatch = match(`/:path?/:do(${_do})?/:id?/:page?`, { decode: decodeURIComponent });
+  const urls = url.parse(request.url, true);
+  const params = pathMatch(urls.pathname).params;
+  // console.log(params);
+
+  const ACT = 'notice';
+  const DO = params.do ?? 'view';
+  const ID = params.id ?? 1;
+  const PAGE = params.page ?? 1;
+  if (isNaN(ID) || isNaN(PAGE)) {
+    response.render('404.ejs');
+    return;
+  }
 
   if (method === 'GET') {
 

@@ -1,12 +1,7 @@
 import * as url from 'url';
 import fs from 'fs';
 import path from 'path';
-
 import routes from './routes/index.js';
-
-// https://www.npmjs.com/package/path-to-regexp
-import { pathToRegexp } from 'path-to-regexp';
-const regexp = pathToRegexp('/:path?/:do?/:id?/:page?');
 
 let publicPath, viewsPath;
 
@@ -23,9 +18,7 @@ export default class Router {
     const method = request.method;
     const urls = url.parse(request.url, true);
     const paths = urls.pathname;
-    const params = regexp.exec(paths);
-    const pathname = (params[1])? params[1] : 'main';
-    // console.log(params);
+    const pathname = paths.split('/')[1]??'main';
 
     // 파일 우선 처리
     // TODO: 메서드로 분리
@@ -68,7 +61,7 @@ export default class Router {
           document = pathname + '.ejs';
           if (fs.existsSync(path.join(viewsPath, document))) {
             if (typeof this[pathname] === 'function') {
-              this[pathname](method, request, response, params, query);
+              this[pathname](method, request, response, query);
             } else {
               response.render(document, {data:data});
             }
@@ -101,7 +94,7 @@ export default class Router {
       // 포스트 페이지
       switch(pathname) {
         default:
-          this[pathname](method, request, response, params);
+          this[pathname](method, request, response);
           break;
       }
 
