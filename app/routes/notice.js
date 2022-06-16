@@ -83,7 +83,7 @@ export default async function notice(method, request, response, get=null) {
     if (DO == 'write') {
       let query = request.body;
       let title = query.title;
-      let content = query.content;
+      let content = query.content.replace(/(<([^>]+)>)/gi, '');
       let writeday = getDate();
 
       let sql = `INSERT INTO notice 
@@ -97,7 +97,7 @@ export default async function notice(method, request, response, get=null) {
 
       let query = request.body;
       let title = query.title;
-      let content = query.content;
+      let content = query.content.replace(/(<([^>]+)>)/gi, '');
       let writeday = getDate();
 
       let sql = `UPDATE notice SET
