@@ -1,13 +1,36 @@
 import mysql from 'mysql2';
-import fs from 'fs';
 
 // 데이터베이스 클래스
 export default class Database {
   constructor (config) {
-    // this.dbConfig = JSON.parse(fs.readFileSync('./config/db.json', 'utf8'));
     this.dbConfig = config.db;
-    this.DB = mysql.createConnection(config.db);
-    this.DB.connect();
+    this.connect(this.dbConfig);
+  }
+
+  connect(dbConfig) {
+    this.DB = mysql.createConnection(dbConfig);
+    this.DB.connect((error) => {
+      if (error) {
+        this.handleError(error);
+      }
+    });
+    this.DB.on('error', (error) => {
+      this.handleError(error);
+    });
+  }
+
+  handleError(error) {
+    console.log(error);
+    switch (error.code) {
+      case 'PROTOCOL_CONNECTION_LOST':
+        this.connect(this.dbConfig);
+        break;
+      default:
+        setTimeout(() => {
+          this.connect(this.dbConfig);
+        }, 2000);
+        break;
+    }
   }
 
   async query(sql) {
