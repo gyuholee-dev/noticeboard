@@ -18,10 +18,9 @@ export default class Router {
     const method = request.method;
     const urls = url.parse(request.url, true);
     const paths = urls.pathname;
-    const pathname = paths.split('/')[1]??'main';
+    const pathname = paths.split('/')[1]?paths.split('/')[1]:'main';
 
     // 파일 우선 처리
-    // TODO: 메서드로 분리
     const ext = paths.split('.').pop().toLowerCase();
     if (ext !== paths && ext !== 'html') {
       const fileName = paths.split('/').pop();
@@ -53,22 +52,26 @@ export default class Router {
       let data = {};
       const query = urls.query;
       switch(pathname) {
-        // case 'main':
-        //   document = 'main.ejs';
-        //   response.render(document, {data:data});
-        //   break;
+        case 'main':
+        case 'view':
+        case 'search':
+        case 'update':
+        case 'write':
+        case 'delete':
+          this.main(method, request, response, query);
+          break;
         default:
-          document = pathname + '.ejs';
-          if (fs.existsSync(path.join(viewsPath, document))) {
-            if (typeof this[pathname] === 'function') {
-              this[pathname](method, request, response, query);
-            } else {
-              response.render(document, {data:data});
-            }
-          } else {
-            // response.status(404).send('404 NOT FOUND');
-            response.render('404.ejs');
-          }
+          // document = pathname + '.ejs';
+          // if (fs.existsSync(path.join(viewsPath, document))) {
+          //   if (typeof this[pathname] === 'function') {
+          //     this[pathname](method, request, response, query);
+          //   } else {
+          //     response.render(document, {data:data});
+          //   }
+          // } else {
+          //   response.render('404.ejs');
+          // }
+          response.render('404.ejs');
           break;
       }
 
@@ -94,7 +97,8 @@ export default class Router {
       // 포스트 페이지
       switch(pathname) {
         default:
-          this[pathname](method, request, response);
+          // this[pathname](method, request, response);
+          this.main(method, request, response, query);
           break;
       }
 

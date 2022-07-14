@@ -7,8 +7,8 @@
   "author": "GyuhoLee",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js",
-    "test": "nodemon app.js"
+    "start": "node notice.js",
+    "test": "nodemon notice.js"
   },
   "nodemonConfig": {
     "ignore": [
