@@ -1,5 +1,5 @@
 # noticeboard
-https://app.geoflowerstudio.com/notice
+https://notice.geoflowerstudio.com/
 
 node.js 수업으로 만든 간단한 공지사항 게시판. 
 
